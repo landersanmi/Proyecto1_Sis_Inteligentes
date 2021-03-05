@@ -1,5 +1,5 @@
 breadth.first.search = function(problem,
-                                max_iterations = 10000000, 
+                                max_iterations = 1000, 
                                 count_print = 100, 
                                 trace = FALSE, 
                                 graph_search = FALSE) {
