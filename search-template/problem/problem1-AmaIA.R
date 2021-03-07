@@ -23,17 +23,17 @@ initialize.problem <- function(file, movements, target) {
     
     if (contador == 0){
       size <- strsplit(line, ",")
-      print("Esto es X")
-      print(size[[1]][1])
-      print("Esto es Y")
-      print(size[[1]][2])
-      problem$rows <- strtoi(size[[1]][1])
-      problem$columns  <- strtoi(size[[1]][2])
+      #print("Esto es X")
+      #print(size[[1]][1])
+      #print("Esto es Y")
+      #print(size[[1]][2])
+      problem$columns <- strtoi(size[[1]][1])
+      problem$rows  <- strtoi(size[[1]][2])
     
     }else if(contador == 1){
       mountPoint <- strsplit(line, ",")
-      mountX <- strtoi(mountPoint[[1]][1])
-      mountY <- strtoi(mountPoint[[1]][2])
+      mountY <- strtoi(mountPoint[[1]][1])
+      mountX <- strtoi(mountPoint[[1]][2])
       
     }else if(contador == 2){
       assemblyPoints <- strsplit(line, ";")
@@ -42,12 +42,12 @@ initialize.problem <- function(file, movements, target) {
       counter <- 1
       for (point in assemblyPoints){
         coordenadas <- strsplit(point, ",")
-        print(coordenadas)
+        #print(coordenadas)
         for(coordenada in coordenadas){
           assemblyX <- append(assemblyX, strtoi(coordenada[[1]][1]))
           assemblyY <- append(assemblyY, strtoi(coordenada[[2]][1]))
-          print(assemblyX)
-          print(assemblyY)
+          #print(assemblyX)
+          #print(assemblyY)
         }
       }
       
@@ -57,19 +57,19 @@ initialize.problem <- function(file, movements, target) {
       forbiddenY <- c()
       for (point in forbiddenPoints){
         coordenadas <- strsplit(point, ",")
-        print(coordenadas)
+        #print(coordenadas)
         for(coordenada in coordenadas){
           forbiddenX <- append(forbiddenX, strtoi(coordenada[[1]][1]))
           forbiddenY <- append(forbiddenY, strtoi(coordenada[[2]][1]))
-          print(forbiddenX)
-          print(forbiddenY)
+          #print(forbiddenX)
+          #print(forbiddenY)
         }
       }
       
     }else if ( length(line) == 0 ) {
       break
     }
-    print(line)
+    #print(line)
     contador <- contador +1
   }
   
@@ -88,16 +88,16 @@ initialize.problem <- function(file, movements, target) {
 
   initialState$mat[[1]][mountX, mountY] <- -1
   
-  for (i in 1:length(assemblyX)){
-    initialState$mat[[1]][assemblyX[i], assemblyY[i]] <- i
+  for (i in 1:length(assemblyY)){
+    initialState$mat[[1]][assemblyY[i], assemblyX[i]] <- i
   }
-  for (i in 1:length(forbiddenX)){
-    initialState$mat[[1]][forbiddenX[i], forbiddenY[i]] <- -4
+  for (i in 1:length(forbiddenY)){
+    initialState$mat[[1]][forbiddenY[i], forbiddenX[i]] <- -4
   }
   
   for (move in movements) {
     initialState <- effect(initialState, move, problem)
-    print(move)
+    #print(move)
   }
   print("INITIAL STATE APLICADO MOVIMIENTOS")
   print(initialState[[1]])
@@ -121,8 +121,8 @@ is.applicable <- function (state, action, problem) {
   #print(state)
   stateMat <- state[[1]][1]
   stateMat <- stateMat[[1]]
-  print("STATEMAT RECIBIDO -->")
-  print(stateMat)
+  #print("STATEMAT RECIBIDO -->")
+  #print(stateMat)
   #print("Cantidad de -2 -->")
   #print(length(which(stateMat == -2, arr.ind = TRUE)))
   if(length(which(as.numeric(unlist(stateMat)) == -2 )) == 0){
@@ -205,7 +205,7 @@ is.applicable <- function (state, action, problem) {
       is_util_movement <- FALSE
     }
 
-    return(row != 1 && stateMat[row-1, col] != -4 && stateMat[row-1, col] != -3 && stateMat[row-1, col] != -1 && is_correct_number && is_util_movement)
+    return(row != 1 && stateMat[row-1, col] != -4 && stateMat[row-1, col] != -3 && stateMat[row-1, col] != -1 && is_correct_number )
   }
   
   if (action == "Down") {
@@ -217,7 +217,7 @@ is.applicable <- function (state, action, problem) {
     if(state[[3]][1] == "Up" && (state[[3]][2] == "Left" || state[[3]][2] == "Right")){
       is_util_movement <- FALSE
     }
-    return(row != problem$rows && stateMat[row+1, col] != -4 && stateMat[row+1, col] != -3 && stateMat[row+1, col] != -1 && is_correct_number && is_util_movement)
+    return(row != problem$rows && stateMat[row+1, col] != -4 && stateMat[row+1, col] != -3 && stateMat[row+1, col] != -1 && is_correct_number)
   }
   
   if (action == "Left") {
@@ -229,7 +229,7 @@ is.applicable <- function (state, action, problem) {
     if(state[[3]][1] == "Right" && (state[[3]][2] == "Left" || state[[3]][2] == "Right")){
       is_util_movement <- FALSE
     }
-    return(col != 1 && stateMat[row, col-1] != -4 && stateMat[row, col-1] != -3 && stateMat[row, col-1] != -1 && is_correct_number && is_util_movement)
+    return(col != 1 && stateMat[row, col-1] != -4 && stateMat[row, col-1] != -3 && stateMat[row, col-1] != -1 && is_correct_number)
   }
   
   if (action == "Right") {
@@ -241,7 +241,7 @@ is.applicable <- function (state, action, problem) {
     if(state[[3]][1] == "Left" && (state[[3]][2] == "Left" || state[[3]][2] == "Right")){
       is_util_movement <- FALSE
     }
-    return(col != problem$columns && stateMat[row, col+1] != -4 && stateMat[row, col+1] != -3 && stateMat[row, col+1] != -1 && is_correct_number && is_util_movement)
+    return(col != problem$columns && stateMat[row, col+1] != -4 && stateMat[row, col+1] != -3 && stateMat[row, col+1] != -1 && is_correct_number)
   }
   
   return(FALSE)
@@ -280,7 +280,7 @@ effect <- function (state, action, problem) {
       result[[3]]$lastActions[1] <- result[[3]]$lastActions[2]
       result[[3]]$lastActions[2] <- "Up"
     }
-    print(result$mat)
+    #print(result$mat)
     return(result)
   }
   
@@ -298,7 +298,7 @@ effect <- function (state, action, problem) {
       result[[3]]$lastActions[1] <- result[[3]]$lastActions[2]
       result[[3]]$lastActions[2] <- "Down"
     }
-    print(result$mat)
+    #print(result$mat)
     return(result)
   }
   
@@ -316,7 +316,7 @@ effect <- function (state, action, problem) {
       result[[3]]$lastActions[1] <- result[[3]]$lastActions[2]
       result[[3]]$lastActions[2] <- "Left"
     }
-    print(result$mat)
+    #print(result$mat)
     return(result)
   }
   
@@ -334,7 +334,7 @@ effect <- function (state, action, problem) {
       result[[3]]$lastActions[1] <- result[[3]]$lastActions[2]
       result[[3]]$lastActions[2] <- "Right"
     }
-    print(result$mat)
+    #print(result$mat)
     return(result)
   }
 
@@ -347,6 +347,8 @@ is.final.state <- function (state, final_satate, problem) {
   
   stateMat <- state[[1]][1]
   stateMat <- stateMat[[1]]
+  #print("Es final???")
+  #print(stateMat)
   target <- problem$target
   return(length(which(as.numeric(unlist(stateMat)) == target )) == 0)
   
@@ -370,7 +372,7 @@ is.final.state <- function (state, final_satate, problem) {
 
 # Transforms a state into a string
 to.string = function (state, problem) {
-  #print(state)
+  print(state)
 }
 
 # Returns the cost of applying an action over a state
