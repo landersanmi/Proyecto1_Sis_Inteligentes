@@ -58,7 +58,7 @@ breadth.first.search = function(problem,
     
     #If the node extracted from frontier contains the final state
     #the algorithm ends because the solution has be founded
-    if (is.final.state(node_first$state, state_final)) {
+    if (is.final.state(node_first$state, state_final, problem)) {
       end_reason <- "Solution"
       break
     }
