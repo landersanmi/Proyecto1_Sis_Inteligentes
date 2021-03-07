@@ -46,7 +46,7 @@ movements_ids_gs <- c()
 for (i in 1: problem$assembly_cuantity) {
   problemTemp_bfs_ts <- initialize.problem("../data/assembler-robot-txt/assembler-robot-1.txt", movements_bfs_ts, i)
   bfs_ts <- breadth.first.search(problemTemp_bfs_ts)
-  movements_dfs_ts <- append(movements_dfs_ts, dfs_ts[[3]]$actions)
+  movements_bfs_ts <- append(movements_bfs_ts, bfs_ts[[3]]$actions)
   print(movements_bfs_ts)
   
   problemTemp_bfs_gs <- initialize.problem("../data/assembler-robot-txt/assembler-robot-1.txt", movements_bfs_gs, i)
@@ -57,7 +57,7 @@ for (i in 1: problem$assembly_cuantity) {
   problemTemp_dfs_ts <- initialize.problem("../data/assembler-robot-txt/assembler-robot-1.txt", movements_dfs_ts, i)
   dfs_ts <- depth.first.search(problemTemp_dfs_ts, max_iterations = 2500, count_print = 1000)
   print(dfs_ts)
-  movements_dfs_ts <- append(movements_dfs_ts, dfs_ts[[3]]$actions)
+  movements_dfs_ts <- append(movements_dfs_ts, dfs_ts$state_final$actions)
   print(movements_dfs_ts)
   
   problemTemp_dfs_gs <- initialize.problem("../data/assembler-robot-txt/assembler-robot-1.txt", movements_dfs_gs, i)
