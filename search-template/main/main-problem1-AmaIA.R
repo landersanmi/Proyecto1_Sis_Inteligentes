@@ -126,19 +126,19 @@ for (i in 1: problem$assembly_cuantity) {
   # print(i)
   # print(movements_dls6_ts)
 #   #######################################################################################################################
-  problemTemp_dls6_gs <- initialize.problem(filename, movements_dls6_gs, i)
-  dls6_gs_Temp <- depth.limited.search(problemTemp_dls6_gs, depth_limit = 11, max_iterations = 150000, count_print = 1000, graph_search = TRUE)
-  if(!(length(dls6_gs) == 0)){
-    dls6_gs$runtime <- dls6_gs$runtime + dls6_gs_Temp$runtime
-    dls6_gs$state_final$actions <- append(dls6_gs$state_final$actions, dls6_gs_Temp$state_final$actions)
-    dls6_gs$state_final$cost <- dls6_gs$state_final$cost + dls6_gs_Temp$state_final$cost
-  }else{
-    dls6_gs <- dls6_gs_Temp
-  }
-  movements_dls6_gs <- append(movements_dls6_gs, dls6_gs_Temp$state_final$actions)
-  print("MOVIMIENTOS EN DLS6-GS")
-  print(i)
-  print(movements_dls6_gs)
+  # problemTemp_dls6_gs <- initialize.problem(filename, movements_dls6_gs, i)
+  # dls6_gs_Temp <- depth.limited.search(problemTemp_dls6_gs, depth_limit = 11, max_iterations = 150000, count_print = 1000, graph_search = TRUE)
+  # if(!(length(dls6_gs) == 0)){
+  #   dls6_gs$runtime <- dls6_gs$runtime + dls6_gs_Temp$runtime
+  #   dls6_gs$state_final$actions <- append(dls6_gs$state_final$actions, dls6_gs_Temp$state_final$actions)
+  #   dls6_gs$state_final$cost <- dls6_gs$state_final$cost + dls6_gs_Temp$state_final$cost
+  # }else{
+  #   dls6_gs <- dls6_gs_Temp
+  # }
+  # movements_dls6_gs <- append(movements_dls6_gs, dls6_gs_Temp$state_final$actions)
+  # print("MOVIMIENTOS EN DLS6-GS")
+  # print(i)
+  # print(movements_dls6_gs)
 #   #######################################################################################################################
 #   problemTemp_dls10_ts <- initialize.problem(filename, movements_dls10_ts, i)
 #   dls10_ts_Temp <- depth.limited.search(problemTemp_dls10_ts, depth_limit =300, max_iterations = 4000, count_print = 1000)
@@ -182,19 +182,19 @@ for (i in 1: problem$assembly_cuantity) {
 #   print(i)
 #   print(movements_ids_ts)
 # #########################################################################################################################
-#   problemTemp_ids_gs <- initialize.problem(filename, movements_ids_gs, i)
-#   ids_gs_Temp <- iterative.deepening.search(problemTemp_ids_gs, max_iterations = 150000, count_print = 1000, graph_search = TRUE)
-#   if(!(length(ids_gs) == 0)){
-#     ids_gs$runtime <- ids_gs$runtime + ids_gs_Temp$runtime
-#     ids_gs$state_final$actions <- append(ids_gs$state_final$actions, ids_gs_Temp$state_final$actions)
-#     ids_gs$state_final$cost <- ids_gs$state_final$cost + ids_gs_Temp$state_final$cost
-#   }else{
-#     ids_gs <- ids_gs_Temp
-#   }
-#   movements_ids_gs <- append(movements_ids_gs, ids_gs_Temp$state_final$actions)
-#   print("MOVIMIENTOS EN IDS_GS")
-#   print(i)
-#   print(movements_ids_gs)
+  problemTemp_ids_gs <- initialize.problem(filename, movements_ids_gs, i)
+  ids_gs_Temp <- iterative.deepening.search(problemTemp_ids_gs, max_iterations = 150000, count_print = 1000, graph_search = TRUE)
+  if(!(length(ids_gs) == 0)){
+    ids_gs$runtime <- ids_gs$runtime + ids_gs_Temp$runtime
+    ids_gs$state_final$actions <- append(ids_gs$state_final$actions, ids_gs_Temp$state_final$actions)
+    ids_gs$state_final$cost <- ids_gs$state_final$cost + ids_gs_Temp$state_final$cost
+  }else{
+    ids_gs <- ids_gs_Temp
+  }
+  movements_ids_gs <- append(movements_ids_gs, ids_gs_Temp$state_final$actions)
+  print("MOVIMIENTOS EN IDS_GS")
+  print(i)
+  print(movements_ids_gs)
 }
 
 #warnings()
