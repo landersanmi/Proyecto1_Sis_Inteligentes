@@ -73,7 +73,7 @@ for (i in 1: problem$assembly_cuantity) {
   # print("MOVIMIENTOS EN BFS_TS")
   # print(i)
   # print(movements_bfs_ts)
-  #####################################################################################################################
+  # ####################################################################################################################
   # problemTemp_bfs_gs <- initialize.problem(filename, movements_bfs_gs, i)
   # bfs_gs_Temp <- breadth.first.search(problemTemp_bfs_gs, graph_search = T, max_iterations = 150000)
   # if(!(length(bfs_gs) == 0)){
