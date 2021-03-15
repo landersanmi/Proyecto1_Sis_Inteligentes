@@ -1,10 +1,10 @@
-depth.limited.search = function(problem,
-                                max_iterations = 1000, 
-                                count_print = 100, 
-                                trace = FALSE, 
-                                graph_search = FALSE,
-                                depth_limit = 100) {
-  name_method      <- paste0("Depth First Search - Limit=", depth_limit, ifelse(graph_search, " + GS", ""))
+depth.first.search = function(problem,
+                              max_iterations = 1000, 
+                              count_print = 100, 
+                              trace = FALSE, 
+                              graph_search = FALSE) {
+  
+  name_method      <- paste0("Depth First Search", ifelse(graph_search, " + GS", ""))
   state_initial    <- problem$state_initial
   state_final      <- problem$state_final
   actions_possible <- problem$actions_possible
@@ -18,7 +18,7 @@ depth.limited.search = function(problem,
                depth = 0,
                cost = 0)
   frontier <- list(node)
-  
+
   if (graph_search) {
     expanded_nodes <- list()     
   }
@@ -58,57 +58,53 @@ depth.limited.search = function(problem,
     
     #If the node extracted from frontier contains the final state
     #the algorithm ends because the solution has be founded
-    if (is.final.state(node_first$state, state_final)) {
+    if (is.final.state(node_first$state, state_final, problem)) {
       end_reason <- "Solution"
       break
     }
-
-    nodes_added_frontier <- 0
-        
-    # Check depth_limit
-    if (node_first$depth < depth_limit) {
-      #The graph search stores the expanded states to check for repeated states
-      if (graph_search) {
-        expanded_nodes <- append(expanded_nodes, list(node_first))
-      }
-      
-      #The node extracted from frontier is expanded and its successor nodes are inserted into frontier
-      sucessor_nodes <- expand.node(node_first, actions_possible, problem)
     
-      if (length(sucessor_nodes) > 0) {
-        #Graph Search implementation
-        if (graph_search) {
-          #Nodes that are not repeated are stores in a list
-          not_repeated_nodes <- list()
-      
-          for (i in 1:length(sucessor_nodes)) {
-            sucessor_node <- sucessor_nodes[[i]]
-            #Check if the new node is frontier list or in the list of expanded states
-            if (!any(sapply(frontier, function (x) identical(x$state, sucessor_node$state)))) {
-              if (!any(sapply(expanded_nodes, function (x) identical(x$state, sucessor_node$state)))) {
-                not_repeated_nodes <- append(not_repeated_nodes, list(sucessor_node))
-              }
+    #The graph search stores the expanded states to check for repeated states
+    if (graph_search) {
+      expanded_nodes <- append(expanded_nodes, list(node_first))
+    }
+    
+    nodes_added_frontier <- 0
+    #The node extracted from frontier is expanded and its successor nodes are inserted into frontier
+    sucessor_nodes <- expand.node(node_first, actions_possible, problem)
+    
+    if (length(sucessor_nodes) > 0) {
+      #Graph Search implementation
+      if (graph_search) {
+        #Nodes that are not repeated are stores in a list
+        not_repeated_nodes <- list()
+        
+        for (i in 1:length(sucessor_nodes)) {
+          sucessor_node <- sucessor_nodes[[i]]
+          #Check if the new node is frontier list or in the list of expanded states
+          if (!any(sapply(frontier, function (x) identical(x$state, sucessor_node$state)))) {
+            if (!any(sapply(expanded_nodes, function (x) identical(x$state, sucessor_node$state)))) {
+              not_repeated_nodes <- append(not_repeated_nodes, list(sucessor_node))
             }
           }
-          
-          #Successor nodes list is updated
-          sucessor_nodes <- not_repeated_nodes
-        } # Graph search
-        
-        #NOTE: Successor nodes are added at the front of the list // Depth-First-Search
-        frontier <- c(sucessor_nodes, frontier)
-        
-        nodes_added_frontier <- length(sucessor_nodes)
-        
-        #If "trace" is on, the information of each new node is displayed
-        if (trace && length(sucessor_nodes) > 0) {
-          for (i in 1:length(sucessor_nodes)) {
-            string_aux <- to.string(sucessor_nodes[[i]]$state)
-            print(paste0("-> Added: ", string_aux, " / depth=", sucessor_nodes[[i]]$depth, ", cost=", sucessor_nodes[[i]]$depth), quote = FALSE)
-          }
         }
-      } # length(sucessor_nodes) > 0
-    }# Check depth_limit
+        
+        #Successor nodes list is updated
+        sucessor_nodes <- not_repeated_nodes
+      } # Graph search
+      
+      #NOTE: Successor nodes are added at the front of the list // Depth-First-Search
+      frontier <- c(sucessor_nodes, frontier)
+      
+      nodes_added_frontier <- length(sucessor_nodes)
+      
+      #If "trace" is on, the information of each new node is displayed
+      if (trace && length(sucessor_nodes) > 0) {
+        for (i in 1:length(sucessor_nodes)) {
+          string_aux <- to.string(sucessor_nodes[[i]]$state)
+          print(paste0("-> Added: ", string_aux, " / depth=", sucessor_nodes[[i]]$depth, ", cost=", sucessor_nodes[[i]]$depth), quote = FALSE)
+        }
+      }
+    } # length(sucessor_nodes) > 0
     
     if (trace) {
       print(paste0("<> Nodes in frontier: ", length(frontier)), quote = FALSE)
@@ -148,6 +144,6 @@ depth.limited.search = function(problem,
   }
   
   result$report <- report
-  
+
   return(result)
 }
