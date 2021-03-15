@@ -84,7 +84,7 @@ initialize.problem <- function(file, movements, target) {
   print(initialState[[1]])
   problem$state_initial     <- initialState
   #problem$state_final       <- <INSERT CODE HERE>
-  problem$actions_possible  <- data.frame(direction = c("Up", "Down", "Left", "Right"), stringsAsFactors = FALSE)
+  problem$actions_possible  <- data.frame(direction = c("Up","Down", "Left", "Right"), stringsAsFactors = FALSE)
   problem$assembly_cuantity <- length(assemblyX)
   problem$target <- target
   
@@ -204,12 +204,30 @@ get.cost <- function (action, state, problem) {
   
   return(1) # Default value is 1.
 }
-
+manhattan_dist <- function(a, b){
+  if (!(length(a)==0) && !(length(b)==0)){
+    dist <- abs(a-b)
+    dist <- sum(dist)
+    return(dist)
+  }else{
+    return(0)
+  }
+}
 # Heuristic function used by Informed Search Algorithms
 get.evaluation <- function(state, problem) {
   
-  # <INSERT YOUR CODE HERE TO RETURN THE RESULT OF THE EVALUATION FUNCTION>
+  stateMat <- state[[1]][1]
+  stateMat <- stateMat[[1]]
+  whereHead <- c()
+  target <- problem$target
+
+  whereTarget <- which(stateMat == target, arr.ind = TRUE)
   
-  return(1) # Default value is 1.
+  if(length(which(as.numeric(unlist(stateMat)) == -2 )) == 0){
+    whereHead <- which(stateMat == -1, arr.ind = TRUE)
+  }else{
+    whereHead <- which(stateMat == -2, arr.ind = TRUE)
+  }
+  return(manhattan_dist(whereHead, whereTarget)) # Default value is 1.
 }
 
