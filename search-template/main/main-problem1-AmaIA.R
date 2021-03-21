@@ -31,8 +31,10 @@ source("../algorithms/results-analysis/plot-results.R")
 # ADD YOUR CODE HERE TO INITIALIZE YOUR PROBLEM AND INCLUDE THE DEFINITION FILE
 source("../problem/problem1-AmaIA.R")
 
-
-filename <- "../data/assembler-robot-txt/assembler-robot-1.txt"
+################################################################
+#                         ELEGIR MAPA                          #
+################################################################
+filename <- "../data/assembler-robot-txt/assembler-robot-2.txt"
 
 
 problem <- initialize.problem(filename, c(), 1)
@@ -78,7 +80,6 @@ for (i in 1: problem$assembly_cuantity) {
   }
   movements_bfs_ts <- append(movements_bfs_ts, bfs_ts_Temp$state_final$actions)
   print("MOVIMIENTOS EN BFS_TS")
-  print(i)
   print(movements_bfs_ts)
   ####################################################################################################################
   problemTemp_bfs_gs <- initialize.problem(filename, movements_bfs_gs, i)
@@ -92,21 +93,21 @@ for (i in 1: problem$assembly_cuantity) {
   }
   movements_bfs_gs <- append(movements_bfs_gs, bfs_gs_Temp$state_final$actions)
   print("MOVIMIENTOS EN BFS_GS")
-  print(i)
   print(movements_bfs_gs)
   ###################################################################################################################
-    problemTemp_dfs_ts <- initialize.problem(filename, movements_dfs_ts, i)
-    dfs_ts_Temp <- depth.first.search(problemTemp_dfs_ts, max_iterations = 5000, count_print = 1000)
-    if(!(length(dfs_ts) == 0)){
-      dfs_ts$runtime <- dfs_ts$runtime + dfs_ts_Temp$runtime
-      dfs_ts$state_final$actions <- append(dfs_ts$state_final$actions, dfs_ts_Temp$state_final$actions)
-      dfs_ts$state_final$cost <- dfs_ts$state_final$cost + dfs_ts_Temp$state_final$cost
-    }else{
-      dfs_ts <- dfs_ts_Temp
-    }
-    movements_dfs_ts <- append(movements_dfs_ts, dfs_ts_Temp$state_final$actions)
-    print(movements_dfs_ts)
-    ######################################################################################################################
+  problemTemp_dfs_ts <- initialize.problem(filename, movements_dfs_ts, i)
+  dfs_ts_Temp <- depth.first.search(problemTemp_dfs_ts, max_iterations = 5000, count_print = 1000)
+  if(!(length(dfs_ts) == 0)){
+    dfs_ts$runtime <- dfs_ts$runtime + dfs_ts_Temp$runtime
+    dfs_ts$state_final$actions <- append(dfs_ts$state_final$actions, dfs_ts_Temp$state_final$actions)
+    dfs_ts$state_final$cost <- dfs_ts$state_final$cost + dfs_ts_Temp$state_final$cost
+  }else{
+    dfs_ts <- dfs_ts_Temp
+  }
+  movements_dfs_ts <- append(movements_dfs_ts, dfs_ts_Temp$state_final$actions)
+  print("MOVIMIENTOS EN DFS_TS")
+  print(movements_dfs_ts)
+  ######################################################################################################################
   problemTemp_dfs_gs <- initialize.problem(filename, movements_dfs_gs, i)
   dfs_gs_Temp <- depth.first.search(problemTemp_dfs_gs, max_iterations = 5000, count_print = 1000, graph_search = TRUE)
   if(!(length(dfs_gs) == 0)){
@@ -117,10 +118,11 @@ for (i in 1: problem$assembly_cuantity) {
     dfs_gs <- dfs_gs_Temp
   }
   movements_dfs_gs <- append(movements_dfs_gs, dfs_gs_Temp$state_final$actions)
+  print("MOVIMIENTOS EN DFS_GSS")
   print(movements_dfs_gs)
   ######################################################################################################################
   problemTemp_dls6_ts <- initialize.problem(filename, movements_dls6_ts, i)
-  dls6_ts_Temp <- depth.limited.search(problemTemp_dls6_ts, depth_limit = 11, max_iterations = 40000, count_print = 1000)
+  dls6_ts_Temp <- depth.limited.search(problemTemp_dls6_ts, depth_limit = 6, max_iterations = 40000, count_print = 1000)
   if(!(length(dls6_ts) == 0)){
     dls6_ts$runtime <- dls6_ts$runtime + dls6_ts_Temp$runtime
     dls6_ts$state_final$actions <- append(dls6_ts$state_final$actions, dls6_ts_Temp$state_final$actions)
@@ -129,11 +131,11 @@ for (i in 1: problem$assembly_cuantity) {
     dls6_ts <- dls6_ts_Temp
   }
   movements_dls6_ts <- append(movements_dls6_ts, dls6_ts_Temp$state_final$actions)
-  print("MOVIMIENTOS EN DLS6")
+  print("MOVIMIENTOS EN DLS6_TS")
   print(movements_dls6_ts)
-    #######################################################################################################################
+  #######################################################################################################################
   problemTemp_dls6_gs <- initialize.problem(filename, movements_dls6_gs, i)
-  dls6_gs_Temp <- depth.limited.search(problemTemp_dls6_gs, depth_limit = 11, max_iterations = 40000, count_print = 1000, graph_search = TRUE)
+  dls6_gs_Temp <- depth.limited.search(problemTemp_dls6_gs, depth_limit = 6, max_iterations = 40000, count_print = 1000, graph_search = TRUE)
   if(!(length(dls6_gs) == 0)){
     dls6_gs$runtime <- dls6_gs$runtime + dls6_gs_Temp$runtime
     dls6_gs$state_final$actions <- append(dls6_gs$state_final$actions, dls6_gs_Temp$state_final$actions)
@@ -142,11 +144,11 @@ for (i in 1: problem$assembly_cuantity) {
     dls6_gs <- dls6_gs_Temp
   }
   movements_dls6_gs <- append(movements_dls6_gs, dls6_gs_Temp$state_final$actions)
-  print("MOVIMIENTOS EN DLS6-GS")
+  print("MOVIMIENTOS EN DLS6_GS")
   print(movements_dls6_gs)
   ######################################################################################################################
   problemTemp_dls10_ts <- initialize.problem(filename, movements_dls10_ts, i)
-  dls10_ts_Temp <- depth.limited.search(problemTemp_dls10_ts, depth_limit =15, max_iterations = 10000, count_print = 1000)
+  dls10_ts_Temp <- depth.limited.search(problemTemp_dls10_ts, depth_limit =10, max_iterations = 10000, count_print = 1000)
   if(!(length(dls10_ts) == 0)){
     dls10_ts$runtime <- dls10_ts$runtime + dls10_ts_Temp$runtime
     dls10_ts$state_final$actions <- append(dls10_ts$state_final$actions, dls10_ts_Temp$state_final$actions)
@@ -155,11 +157,11 @@ for (i in 1: problem$assembly_cuantity) {
     dls10_ts <- dls10_ts_Temp
   }
   movements_dls10_ts <- append(movements_dls10_ts, dls10_ts_Temp$state_final$actions)
-  print("MOVIMIENTOS EN DLS10")
+  print("MOVIMIENTOS EN DLS10_TS")
   print(movements_dls10_ts)
   #######################################################################################################################
   problemTemp_dls10_gs <- initialize.problem(filename, movements_dls10_gs, i)
-  dls10_gs_Temp <- depth.limited.search(problemTemp_dls10_gs, depth_limit = 15, max_iterations = 10000, count_print = 1000, graph_search = TRUE)
+  dls10_gs_Temp <- depth.limited.search(problemTemp_dls10_gs, depth_limit = 10, max_iterations = 10000, count_print = 1000, graph_search = TRUE)
   if(!(length(dls10_gs) == 0)){
     dls10_gs$runtime <- dls10_gs$runtime + dls10_gs_Temp$runtime
     dls10_gs$state_final$actions <- append(dls10_gs$state_final$actions, dls10_gs_Temp$state_final$actions)
@@ -168,7 +170,7 @@ for (i in 1: problem$assembly_cuantity) {
     dls10_gs <- dls10_gs_Temp
   }
   movements_dls10_gs <- append(movements_dls10_gs, dls10_gs_Temp$state_final$actions)
-  print("MOVIMIENTOS EN DLS10-GS")
+  print("MOVIMIENTOS EN DLS10_GS")
   print(movements_dls10_gs)
   #######################################################################################################################
   problemTemp_ids_ts <- initialize.problem(filename, movements_ids_ts, i)
@@ -251,5 +253,4 @@ for (i in 1: problem$assembly_cuantity) {
 }
 
 analyze.results(list(bfs_ts, bfs_gs, dfs_ts, dfs_gs, dls6_ts, dls6_gs, dls10_ts, dls10_gs, ids_ts, ids_gs, gbfs_ts, gbfs_gs, ucs_ts, ucs_gs), problemTemp_bfs_ts)
-analyze.results(list(  gbfs_ts, gbfs_gs), problemTemp_bfs_ts)
 
